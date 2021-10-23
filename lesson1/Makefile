@@ -1,0 +1,20 @@
+.PHONY: clean
+# 如果touch add.c， 那么会先执行add.c的编译，时间戳
+main: main.o add.o sub.o
+		gcc -Wall -g main.o add.o sub.o -o main
+
+main.o: main.c
+	gcc -Wall -g -c main.c -o main.o
+
+add.o: add.c add.h
+	gcc -Wall -g -c add.c -o add.o
+
+sub.o: sub.c sub.h
+	gcc -Wall -g -c sub.c -o sub.o
+
+
+# 伪目标, 如果是伪目标需要  .PHony: clean
+# 不然如果当前目录下刚好有伪目标这个文件，那么就不会执行。
+# 错误警告为  make: `clean' is up to date.
+clean:
+	rm -rf main main.o add.o sub.o
